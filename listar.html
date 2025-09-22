@@ -1,1 +1,43 @@
+<h2>Livros Disponíveis</h2>
+    
+    <form action="{{ url_for('listar_livros') }}" method="get" style="margin-bottom: 1em;">
+        <input type="text" name="busca" placeholder="Buscar por categoria..." value="{{ busca or '' }}">
+        <button type="submit">Buscar</button>
+        <a href="{{ url_for('listar_livros') }}">Limpar</a>
+    </form>
+    
+    <a href="{{ url_for('cadastrar_livro') }}">Cadastrar Novo Livro</a>
+    <br><br>
+    
+    <table border="1" style="width:100%; border-collapse: collapse;">
+        <thead>
+            <tr style="background-color:#f2f2f2;">
+                <th style="padding: 8px;">Título</th>
+                <th style="padding: 8px;">Autor</th>
+                <th style="padding: 8px;">Categoria</th>
+                <th style="padding: 8px;">Disponível</th>
+                <th style="padding: 8px;">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for livro in livros %}
+            <tr>
+                <td style="padding: 8px;"> ['titulo'] </td>
+                <td style="padding: 8px;"> ['autor'] </td>
+                <td style="padding: 8px;"> ['categoria'] </td>
+                <td style="padding: 8px;">{% if livro['disponivel'] %}Sim{% else %}Não{% endif %}</td>
+                <td style="padding: 8px;">
+                    <a href="{{ url_for('editar_livro', id=livro['id']) }}">Editar</a>
+                    <form action="{{ url_for('excluir_livro', id=livro['id']) }}" method="post" style="display:inline;" onsubmit="return confirm('Tem certeza?');">
+                        <button type="submit">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+            
+            <tr>
+                <td colspan="5" style="padding: 8px; text-align: center;">Nenhum livro encontrado.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
